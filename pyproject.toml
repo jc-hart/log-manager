@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "log-manager"
-version = "0.3.0b1"
+version = "0.3.0b4"
 description = "A Python logging utility for reporting via screen, text file or SharePoint List"
 authors = [
   { name="Jon Hart", email="hartjc@gmail.com" }
@@ -15,6 +15,10 @@ classifiers = [
   "Programming Language :: Python :: 3",
   "Operating System :: Microsoft :: Windows",
   "License :: OSI Approved :: GNU General Public License v3 (GPLv3)"
+]
+
+dependencies = [
+  "simple-stop-watch-utility >=2.0,<3.0"
 ]
 
 [project.urls]
