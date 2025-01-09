@@ -1,3 +1,3 @@
-from .some_module import LogManager
+from .main import LogManager
 
 __all__ = ["LogManager"]
