@@ -2,6 +2,8 @@ from datetime import datetime
 import getpass
 import os
 import traceback
+from stop_watch import StopWatch
+
 
 class SetupError(ValueError):
     err_dict = {'permission': {'name': 'Permission Error',
@@ -23,102 +25,6 @@ Raise this when there's an application error
 
     def __str__(self):
         return '\n'.join(['MM Processing Manager Application', self.error, self.description])
-
-
-class StopWatch:  # v2.1.0
-    lap_timers = {}
-
-    def __init__(self, trim=True, count=0):
-        self.last_call = 'Start'
-        self.trim = trim
-        start_time = datetime.now()
-        self.start = str(start_time)[:-7] if self.trim else str(start_time)
-        self.lap_timers[self.last_call] = start_time
-        for i in range(count):
-            self.lap_timers[i] = start_time
-        self.__set_end()
-
-    def __repr__(self):
-        return str(datetime.now() - self.lap_timers['Start'])[:-7] if self.trim else \
-            str(datetime.now() - self.lap_timers['Start'])
-
-    # Check time interval between timer 'name' and 'end'. If no 'end', creates a new timer
-    def lap_reset(self, name, time_now='Now'):
-        if name == 'LastCall':
-            name = self.last_call
-        self.last_call = name
-        if name == 'Start':
-            return "Error: Cannot reset Start time!"
-        now_time = self.lap_timers[time_now] if time_now in self.lap_timers else datetime.now()
-        if name in self.lap_timers:
-            out_str = str(now_time - self.lap_timers[name])
-        else:
-            out_str = str(now_time - self.lap_timers['Start'])
-        self.lap_timers[name] = now_time
-        if self.trim:
-            out_str = out_str[:-7]
-        self.__set_end()
-        return out_str
-
-    # Check time interval since timer 'name' was last set
-    def check_lap(self, name='Start'):
-        if name == 'LastCall':
-            name = self.last_call
-        self.last_call = name
-        now_time = datetime.now()
-        if name in self.lap_timers:
-            out_str = str(now_time - self.lap_timers[name])
-        else:
-            out_str = str(now_time - self.lap_timers['Start'])
-        self.lap_timers[name] = now_time
-        if self.trim:
-            out_str = out_str[:-7]
-        self.__set_end()
-        return out_str
-
-    # Check time interval between timer 'name' and 'end'. If no 'end', creates a new timer
-    def interval(self, end, name='Start'):
-        if name == 'LastCall':
-            name = self.last_call
-        self.last_call = name
-        if end in self.lap_timers:
-            out_str = str(self.lap_timers[end] - self.lap_timers[name])
-        else:
-            self.lap_reset(end)
-            out_str = str(datetime.now() - self.lap_timers[name])
-        if self.trim:
-            out_str = out_str[:-7]
-        self.__set_end()
-        return out_str
-
-    # gets the time value of the timer[name]
-    def get(self, name='Start'):
-        if name == 'LastCall':
-            name = self.last_call
-        self.last_call = name
-        out_time = datetime.now() - self.lap_timers[name]
-        self.__set_end()
-        return out_time
-
-    def now(self, as_str=True):
-        out_time = datetime.now()
-        out_str = str(out_time)[:-7] if self.trim else str(out_time)
-        return out_str if as_str else out_time
-
-    def __set_end(self):
-        self.end = str(datetime.now())[:-7] if self.trim else datetime.now()
-
-    def list(self):
-        out_list = {}
-        time_now = datetime.now()
-        timer_id = 0
-        for timer in self.lap_timers:
-            out_str = str(time_now - self.lap_timers[timer])
-            if self.trim:
-                out_str = out_str[:-7]
-            out_list[timer] = out_str
-            timer_id += 1
-        return out_list
 
 
 class LogManager:  # v3.3.0
