@@ -9,7 +9,6 @@ description = "A Python logging utility for reporting via screen, text file or S
 authors = [
   { name="Jon Hart", email="hartjc@gmail.com" }
 ]
-license = "GNU"
 readme = "README.md"
 requires-python = ">=3.10"
 classifiers = [
