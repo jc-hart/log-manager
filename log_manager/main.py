@@ -27,6 +27,7 @@ Raise this when there's an application error
         return '\n'.join(['MM Processing Manager Application', self.error, self.description])
 
 
+
 class LogManager:  # v3.3.0
     file_logging = False
     screen_logging = False
