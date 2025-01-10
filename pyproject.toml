@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "log-manager"
-version = "0.3.0b4"
+version = "1.0.1"
 description = "A Python logging utility for reporting via screen, text file or SharePoint List"
 authors = [
   { name="Jon Hart", email="hartjc@gmail.com" }
